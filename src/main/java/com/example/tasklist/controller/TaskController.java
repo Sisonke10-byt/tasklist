@@ -24,7 +24,7 @@ public class TaskController {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Task> create(@Valid @RequestBody Task task) {
         logger.info("POST /api/tasks - payload title='{}', dueDate='{}'", task.getTitle(), task.getDueDate());
         logger.debug("Current date: {}", LocalDate.now());
