@@ -32,6 +32,7 @@ public class TaskController {
         return ResponseEntity.created(URI.create("/api/tasks/" + created.getId())).body(created);
     }
 
+    //Works
     @GetMapping
     public List<Task> list(@RequestParam(value = "status", required = false) String status) {
         Optional<Status> s = Optional.empty();
@@ -47,6 +48,7 @@ public class TaskController {
         return service.list(s);
     }
 
+    //Works
     @PutMapping("/{id}/complete")
     public Task markComplete(@PathVariable Long id) {
         logger.info("PUT /api/tasks/{}/complete", id);
