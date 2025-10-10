@@ -3,21 +3,20 @@
 # -------------------------------
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 
-# Set working directory
 WORKDIR /app
 
-# Copy Maven config files for dependency caching
-COPY pom.xml .
-COPY mvnw .
+# Copy Maven config for dependency caching
+COPY pom.xml . 
+COPY mvnw . 
 COPY .mvn .mvn
 
-# Download dependencies only (speeds up rebuilds)
+# Download dependencies only
 RUN mvn -B dependency:go-offline
 
-# Copy the source code
+# Copy source code
 COPY src ./src
 
-# Build the project (produces the JAR in target/)
+# Build the project (skip tests to speed up)
 RUN mvn clean package -DskipTests
 
 # -------------------------------
@@ -25,16 +24,14 @@ RUN mvn clean package -DskipTests
 # -------------------------------
 FROM eclipse-temurin:17-jdk-jammy
 
-# Set working directory in runtime container
 WORKDIR /app
 
-# Copy the built JAR from the build stage
+# Copy the built JAR
 COPY --from=build /app/target/*.jar app.jar
 
 # Expose Spring Boot default port
 EXPOSE 8080
 
-# Run the Spring Boot app
+# Run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.jar"]
-
 

@@ -1,9 +1,8 @@
-version: "3.9"
-
 services:
-  postgres:
+
+  db:
     image: postgres:17
-    container_name: tasklist_postgres
+    container_name: taskdb_db
     environment:
       POSTGRES_DB: taskdb
       POSTGRES_USER: postgres
@@ -11,23 +10,27 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
-    restart: always
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - tasklist_network
 
-  tasklist:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  app:
+    image: tasklist-app
     container_name: tasklist_app
-    depends_on:
-      - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/taskdb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://taskdb_db:5432/taskdb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: Boyilani10*
     ports:
       - "8080:8080"
-    restart: always
+    depends_on:
+      - db
+    networks:
+      - tasklist_network
+
+networks:
+  tasklist_network:
+    driver: bridge
 
 volumes:
-  pgdata:
+  postgres_data:
