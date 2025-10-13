@@ -15,7 +15,7 @@ jobs:
         env:
           POSTGRES_DB: testdb
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: Boyilani10*
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         ports:
           - 5432:5432
         options: >-
@@ -27,7 +27,7 @@ jobs:
     env:
       SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/testdb
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: Boyilani10*
+      SPRING_DATASOURCE_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v3

@@ -16,7 +16,7 @@ services:
       - tasklist_network
 
   app:
-    build: .                     # 👈 this tells Docker to build from your local Dockerfile
+    build: .                     
     image: tasklist-app
     container_name: tasklist_app
     environment:
