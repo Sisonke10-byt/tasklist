@@ -5,11 +5,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.junit.jupiter.api.Test;
 
 @SpringBootTest
-@ActiveProfiles("test") // H2 in-memory DB
-class TasklistApplicationTests {
+@ActiveProfiles("ci") // Postgres in CI Docker container
+class TasklistIntegrationTests {
 
     @Test
     void contextLoads() {
-        // Verifies that Spring context loads successfully
+        // Verifies Spring context loads with real Postgres
     }
 }
+

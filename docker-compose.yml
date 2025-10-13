@@ -1,6 +1,6 @@
+version: "3.9"
 
 services:
-
   db:
     image: postgres:17
     container_name: taskdb_db
@@ -16,7 +16,7 @@ services:
       - tasklist_network
 
   app:
-    build: .                     
+    build: .
     image: tasklist-app
     container_name: tasklist_app
     environment:

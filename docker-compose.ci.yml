@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - tasklist_network
+
+  app:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taskdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - db
+    networks:
+      - tasklist_network
+    ports:
+      - "8080:8080"
+    command: >
+      sh -c "until pg_isready -h db -p 5432; do echo 'Waiting for Postgres...'; sleep 2; done &&
+             java -jar /app/app.jar"
+
+networks:
+  tasklist_network:
+    driver: bridge
