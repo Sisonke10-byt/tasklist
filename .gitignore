@@ -1,8 +1,14 @@
-HELP.md
-target/
+# -----------------------------
+# Maven / Java
+# -----------------------------
+/target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+# -----------------------------
+# IDEs
+# -----------------------------
 
 ### STS ###
 .apt_generated
@@ -31,3 +37,34 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# -----------------------------
+# Docker
+# -----------------------------
+docker-compose.override.yml
+**/docker-compose.override.yml
+**/docker-compose.override.*
+docker-compose.override.*
+
+# -----------------------------
+# Environment / Credentials
+# -----------------------------
+.env
+*.env
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
+
+# -----------------------------
+# OS files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Others
+# -----------------------------
+HELP.md
+
